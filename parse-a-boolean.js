@@ -1,4 +1,4 @@
-const ops = {
+/* const ops = {
   t: true,
   f: false,
   true: "t",
@@ -25,18 +25,22 @@ function and(operations, res = true) {
   }
   res = res & ops[operations.pop()];
   return !!and(operations, res);
-}
+} */
 
 function resolveExp(exp) {
-  const fn = exp[0];
-  const operations = exp.slice(2, exp.length - 1).split(",");
-  switch (fn) {
+  //   const fn = exp[0];
+  //   const operations = exp.slice(2, exp.length - 1).split(",");
+  //   switch (fn) {
+  switch (exp[0]) {
     case "!":
-      return not(operations);
+      //   return not(operations);
+      return exp.indexOf("f") > -1;
     case "|":
-      return or(operations);
+      //   return or(operations);
+      return exp.indexOf("t") > -1;
     case "&":
-      return and(operations);
+      //   return and(operations);
+      return exp.indexOf("f") === -1;
   }
 }
 
@@ -58,6 +62,6 @@ function parseBoolExpr(exp) {
   const last = expersion === exp;
   const v = resolveExp(expersion);
   if (last) return v;
-  return parseBoolExpr(exp.slice(0, openPar) + ops[v] + exp.slice(closePar));
+  // return parseBoolExpr(exp.slice(0, openPar) + ops[v] + exp.slice(closePar));
+  return parseBoolExpr(exp.slice(0, openPar) + v + exp.slice(closePar));
 }
-
